@@ -3,6 +3,9 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import pool from "./model/schema.js";
+import userRouter from "./routes/userRoute.js";
+// import todoRouter from "./routes/todoRoute.js";
+
 dotenv.configDotenv();
 
 const app = express();
@@ -23,3 +26,5 @@ pool.connect()
     .catch((err) => {
         console.log(err);
     });
+
+app.use("/auth/api/v1/", userRouter);
