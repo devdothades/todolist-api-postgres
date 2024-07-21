@@ -4,6 +4,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import pool from "./model/schema.js";
 import userRouter from "./routes/userRoute.js";
+// import asyncHandler from "./middleware/asyncHandler.js";
 // import todoRouter from "./routes/todoRoute.js";
 
 dotenv.configDotenv();
@@ -27,4 +28,5 @@ pool.connect()
         console.log(err);
     });
 
+// app.use(asyncHandler);
 app.use("/auth/api/v1/", userRouter);
