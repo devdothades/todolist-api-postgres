@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import pool from "./model/schema.js";
 import userRouter from "./routes/userRoute.js";
 // import asyncHandler from "./middleware/asyncHandler.js";
-// import todoRouter from "./routes/todoRoute.js";
+import todoRouter from "./routes/todoRoute.js";
 
 dotenv.configDotenv();
 
@@ -30,3 +30,4 @@ pool.connect()
 
 // app.use(asyncHandler);
 app.use("/auth/api/v1/", userRouter);
+app.use("/todo/api/v1/", todoRouter);
