@@ -6,9 +6,12 @@ import {
     updateTask,
     deleteTask,
 } from "../controller/todoController.js";
+import { validate, taskValidationRules } from "../middleware/validation.js";
 
 const router = Router();
 
+router.use(taskValidationRules);
+router.use(validate);
 router.use(authenticateToken);
 
 router.post("/add", addTask);

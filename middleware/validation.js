@@ -19,4 +19,9 @@ const validate = (req, res, next) => {
     next();
 };
 
-export { validate, userValidationRules };
+const taskValidationRules = [
+    body("task").notEmpty().withMessage("Task is required"),
+    body("status").notEmpty().withMessage("Status is required"),
+];
+
+export { validate, userValidationRules, taskValidationRules };
