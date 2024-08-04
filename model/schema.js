@@ -22,7 +22,7 @@ const createTables = async () => {
 
     const queryText2 = `CREATE TABLE IF NOT EXISTS todos (
         id SERIAL PRIMARY KEY,
-        task VARCHAR(128) UNIQUE NOT NULL,
+        task VARCHAR(128) NOT NULL,
         status BOOLEAN DEFAULT FALSE NOT NULL,
         created_at TIMESTAMP DEFAULT NOW(),
         user_id INTEGER REFERENCES users(id) ON DELETE CASCADE

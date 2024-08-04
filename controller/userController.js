@@ -1,9 +1,41 @@
-import { buildCheckFunction } from "express-validator";
+import dotenv from "dotenv";
+dotenv.configDotenv();
 import pool from "../model/schema.js";
 import bycrpt from "bcrypt";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-const login = async (req, res) => {};
+const login = async (req, res) => {
+    const { password, email } = req.body;
+
+    try {
+        const query = await pool.query("SELECT * FROM users WHERE email = $1", [
+            email,
+        ]);
+
+        if (query.rows.length === 0) {
+            return res.status(401).json({ msg: "Invalid credentials" });
+        }
+
+        const user = query.rows[0];
+
+        const isMatch = await bycrpt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ msg: "Invalid credentials" });
+        }
+
+        if (isMatch) {
+            const token = jwt.sign({ userId: user.id }, process.env.SECRET, {
+                expiresIn: "1h",
+            });
+            console.log(token);
+            res.json({ token: token });
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ msg: "Server error" });
+    }
+};
 
 const signup = async (req, res) => {
     const { password, email } = req.body;
